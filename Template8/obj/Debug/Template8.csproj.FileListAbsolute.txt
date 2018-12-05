@@ -117,3 +117,9 @@ C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\obj\De
 C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\obj\Debug\Template8.csproj.CopyComplete
 C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\obj\Debug\HaloBI.Prism.Plugin.Template8.dll
 C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\obj\Debug\HaloBI.Prism.Plugin.Template8.pdb
+C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\bin\Songhay.Net.HttpWebRequest.dll
+C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\bin\System.Net.Http.Extensions.dll
+C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\bin\System.Net.Http.Primitives.dll
+C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\bin\System.Net.Http.Extensions.xml
+C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\bin\System.Net.Http.Primitives.xml
+C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\obj\Debug\Template8.csproj.App.config

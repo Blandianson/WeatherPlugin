@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -110,7 +112,7 @@ namespace HaloBI.Prism.Plugin
 				{
 					item.Selected = true;
 				}
-		}
+		    }
 
             // now the all important client side hook to update the Prism view
             var viewId = context["view"]["id"].ToString();
@@ -285,9 +287,45 @@ namespace HaloBI.Prism.Plugin
             SetContextToSession(context, _contextId);
         }
 
+
+
+
         protected void uiUpdatePrism_Click(object sender, EventArgs e)
         {
-            uiSelectedMembers.Text = uiMembersList.SelectedItem.Text;
+            //
+            // Testing Weather API
+            //
+
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");//
+            //request.Method = "Get";
+            //request.KeepAlive = true;
+            //request.ContentType = "application/json";
+            ////request.ContentType = "application/x-www-form-urlencoded";
+
+            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            ////string myResponse = "";
+            ////using (System.IO.StreamReader sr = new System.IO.StreamReader(response.GetResponseStream()))
+            ////{
+            ////    myResponse = sr.ReadToEnd();
+            ////}
+            //Response.Write(null);
+
+            String returned_data;
+            using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))
+            {
+                //client.BaseAddress = new Uri("https://api.stackexchange.com/2.2/");
+                HttpResponseMessage response = client.GetAsync("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys").Result;
+                response.EnsureSuccessStatusCode();
+                string result = response.Content.ReadAsStringAsync().Result;
+                returned_data = result;
+            }
+
+            //
+            //End Test
+            //
+
+            uiSelectedMembers.Text = uiMembersList.SelectedItem.Text + returned_data + "Hello";
+
         }
     }
 }
