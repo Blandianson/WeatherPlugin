@@ -1,0 +1,13 @@
+﻿body {
+	font-family: Helvetica, Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+}
+
+.ui-plugin-template-context {
+	border-color: gainsboro;
+	background-color: aliceblue;
+}
+
+.ui-plugin-template-prismSelection {
+	background-color: #FFE97F;
+	padding: 4px;
+}

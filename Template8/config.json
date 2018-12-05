@@ -1,0 +1,9 @@
+{
+	"hierarchy": {
+		"name": "[Customer].[Customer Geography]",
+		"level": "[Customer].[Customer Geography].[City]",
+		"allMember": "[Customer].[Customer Geography].[All]"
+	},
+	"headerText": "Halo Prism Plugin Framework",
+	"debug": true
+}
