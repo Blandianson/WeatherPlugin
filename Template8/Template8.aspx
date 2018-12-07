@@ -13,7 +13,7 @@
     <form id="form1" runat="server">
         <div>
 			<br />
-			<h4><asp:Label>Click the button to update the Prism view.</asp:Label></h4>
+			<h4><asp:Label runat="server">Click the button to update the Prism view.</asp:Label></h4>
 			<asp:DropDownList ID="uiMembersList" 
 				runat="server" 
 				OnSelectedIndexChanged="uiMembersList_SelectedIndexChanged"
@@ -38,7 +38,7 @@
 			runat="server"
 			cssClass="ui-plugin-template-prismSelection">
 		</asp:Label>
-        <asp:Image runat="server" ID="WeatherIcon" ImageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/California_sea_lion_in_La_Jolla_%2870568%29.jpg/1200px-California_sea_lion_in_La_Jolla_%2870568%29.jpg" alt="Sample Image" width="300px" />
+        <asp:Image runat="server" ID="WeatherIcon" alt="Sample Image" width="300px" />
 		
 		
 

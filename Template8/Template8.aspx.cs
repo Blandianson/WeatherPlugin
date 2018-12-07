@@ -333,7 +333,7 @@ namespace HaloBI.Prism.Plugin
                     tempCurr + tempUnits + "<br><br>Date:<br>" +
                     date + "<br><br>Sunrise:<br>" +
                     sunrise + "<br><br>Sunset:<br>" +
-                    sunset;
+                    sunset + returned_data["query"];
 
             }
             else
@@ -341,7 +341,10 @@ namespace HaloBI.Prism.Plugin
                 uiSelectedMembers.Text = "Please select a city (not a country) to see the weather for an area.";
             }
 
-            WeatherIcon.scr = "https://visualpharm.com/assets/187/Stormy Weather-595b40b65ba036ed117d38cd.svg";
+
+            //Icons!
+            WeatherIcon.ImageUrl  = "https://visualpharm.com/assets/187/Stormy Weather-595b40b65ba036ed117d38cd.svg";
+            //Icon End
 
         }
 
