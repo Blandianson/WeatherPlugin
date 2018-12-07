@@ -90,6 +90,7 @@ namespace HaloBI.Prism.Plugin
             return JObject.Parse(text);
         }
 
+
         /// <summary>
         /// Set the content
         /// </summary>
@@ -101,9 +102,12 @@ namespace HaloBI.Prism.Plugin
 			uiHeader.Text = context["plugin"]["config"]["headerText"].ToString();
             var members = GetHierarchyMembersFromContext(context);
             uiSelectedMembers.Text = string.Join(",", members.ToArray());
+            //System.Web.HttpContext.Current.Response.Write(uiSelectedMembers.Text + "Test1"); //Gets the City name
+            HttpRequestData(uiSelectedMembers.Text);
 
-			// set members list dropdown
-			SetMembersList(context, uiMembersList);
+
+            // set members list dropdown
+            SetMembersList(context, uiMembersList);
 			if (members.Count > 0)
 			{
 				var item = uiMembersList.Items.FindByText(members[0].ToString());
@@ -136,7 +140,7 @@ namespace HaloBI.Prism.Plugin
 
             uiUpdatePrism.Attributes.Add("onclick", clientsideUpdateFunction);
 
-            SetDebugInfo(context);
+            //SetDebugInfo(context);
         }
 
         private void SetMembersList(JObject context, DropDownList ddl)
@@ -186,14 +190,14 @@ namespace HaloBI.Prism.Plugin
 			}
         }
 
-        private void SetDebugInfo(JObject context)
-        {
-            if (Debug(context))
-            {
-                uiContext.Visible = true;
-                uiContext.Text = context.ToString(Formatting.Indented);
-            }
-        }
+        //private void SetDebugInfo(JObject context)
+        //{
+        //    if (Debug(context))
+        //    {
+        //        uiContext.Visible = true;
+        //        uiContext.Text = context.ToString(Formatting.Indented);
+        //    }
+        //}
 
         /// <summary>
         /// Check config debug status
@@ -283,81 +287,70 @@ namespace HaloBI.Prism.Plugin
                 }
             }
 
-            SetDebugInfo(context);
+            //SetDebugInfo(context);
             SetContextToSession(context, _contextId);
         }
 
-
-
-
-        protected void uiUpdatePrism_Click(object sender, EventArgs e)
+        protected void HttpRequestData(String location)
         {
-            //
-            // Testing Weather API
-            //
-
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");//
-            //request.Method = "Get";
-            //request.KeepAlive = true;
-            //request.ContentType = "application/json";
-            ////request.ContentType = "application/x-www-form-urlencoded";
-
-            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            ////string myResponse = "";
-            ////using (System.IO.StreamReader sr = new System.IO.StreamReader(response.GetResponseStream()))
-            ////{
-            ////    myResponse = sr.ReadToEnd();
-            ////}
-            //Response.Write(null);
-
             JObject returned_data;
             String result;
-            String location = uiMembersList.SelectedItem.Text;
-            //String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
             String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + location + "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+
             using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))
             {
-                //client.BaseAddress = new Uri("https://api.stackexchange.com/2.2/");
                 HttpResponseMessage response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
                 result = response.Content.ReadAsStringAsync().Result;
                 returned_data = JObject.Parse(result);
             }
 
+            JToken baseJson = returned_data["query"]["results"]["channel"];
+
             if (returned_data["query"]["results"].ToString() != "")
             {
 
-                String cityName = returned_data["query"]["results"]["channel"]["location"]["city"].ToString(); //location
-                String countryName = returned_data["query"]["results"]["channel"]["location"]["country"].ToString(); //location
-                String regionName = returned_data["query"]["results"]["channel"]["location"]["region"].ToString(); //location
-                String currentCondit = returned_data["query"]["results"]["channel"]["item"]["condition"]["text"].ToString();
-                String sunrise = returned_data["query"]["results"]["channel"]["astronomy"]["sunrise"].ToString();
-                String sunset = returned_data["query"]["results"]["channel"]["astronomy"]["sunset"].ToString();
-                String tempHigh = returned_data["query"]["results"]["channel"]["item"]["forecast"][0]["high"].ToString();
-                String tempLow = returned_data["query"]["results"]["channel"]["item"]["forecast"][0]["low"].ToString();
-                String date = returned_data["query"]["results"]["channel"]["item"]["forecast"][0]["date"].ToString();
+                String cityName = baseJson["location"]["city"].ToString();
+                String countryName = baseJson["location"]["country"].ToString();
+                String regionName = baseJson["location"]["region"].ToString();
+                String currentCondit = baseJson["item"]["condition"]["text"].ToString();
+                String sunrise = baseJson["astronomy"]["sunrise"].ToString();
+                String sunset = baseJson["astronomy"]["sunset"].ToString();
+                String tempHigh = baseJson["item"]["forecast"][0]["high"].ToString();
+                String tempLow = baseJson["item"]["forecast"][0]["low"].ToString();
+                String tempCurr = baseJson["item"]["condition"]["temp"].ToString();
+                String date = baseJson["item"]["forecast"][0]["date"].ToString();
+                String tempUnits = baseJson["units"]["temperature"].ToString();
 
-                //
-                //End Test
-                //
 
                 uiSelectedMembers.Text = "<br><br>City:<br>" +
                     cityName + "<br><br>Country:<br>" +
                     countryName + "<br><br>Region:<br>" +
                     regionName + "<br><br>Current Conditions:<br>" +
                     currentCondit + "<br><br>Temperature High:<br>" +
-                    tempHigh + "<br><br>Low:<br>" +
-                    tempLow + "<br><br>Date:<br>" +
+                    tempHigh + tempUnits + "<br><br>Low:<br>" +
+                    tempLow + tempUnits + "<br><br>Current Temperature:<br>" +
+                    tempCurr + tempUnits + "<br><br>Date:<br>" +
                     date + "<br><br>Sunrise:<br>" +
                     sunrise + "<br><br>Sunset:<br>" +
                     sunset;
-
 
             }
             else
             {
                 uiSelectedMembers.Text = "Please select a city (not a country) to see the weather for an area.";
             }
+
+            WeatherIcon.scr = "https://visualpharm.com/assets/187/Stormy Weather-595b40b65ba036ed117d38cd.svg";
+
+        }
+
+
+        protected void uiUpdatePrism_Click(object sender, EventArgs e)
+        {
+
+            String location = uiMembersList.SelectedItem.Text;
+            HttpRequestData(location);
 
         }
     }

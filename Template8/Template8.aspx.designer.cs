@@ -22,24 +22,6 @@ namespace HaloBI.Prism.Plugin {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// uiHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label uiHeader;
-        
-        /// <summary>
-        /// uiSelectedMembers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label uiSelectedMembers;
-        
-        /// <summary>
         /// uiMembersList control.
         /// </summary>
         /// <remarks>
@@ -58,12 +40,39 @@ namespace HaloBI.Prism.Plugin {
         protected global::System.Web.UI.WebControls.Button uiUpdatePrism;
         
         /// <summary>
-        /// uiContext control.
+        /// uiHeader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox uiContext;
+        protected global::System.Web.UI.WebControls.Label uiHeader;
+        
+        /// <summary>
+        /// uiSelectedMembers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label uiSelectedMembers;
+        
+        /// <summary>
+        /// weatherImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label weatherImage;
+        
+        /// <summary>
+        /// WeatherIcon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image WeatherIcon;
     }
 }
