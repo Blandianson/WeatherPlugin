@@ -99,7 +99,7 @@ namespace HaloBI.Prism.Plugin
         private void SetContent(JObject context)
         {
             // get Header info from config
-			uiHeader.Text = context["plugin"]["config"]["headerText"].ToString();
+			//uiHeader.Text = context["plugin"]["config"]["headerText"].ToString();
             var members = GetHierarchyMembersFromContext(context);
             uiSelectedMembers.Text = string.Join(",", members.ToArray());
             //System.Web.HttpContext.Current.Response.Write(uiSelectedMembers.Text + "Test1"); //Gets the City name
@@ -138,7 +138,7 @@ namespace HaloBI.Prism.Plugin
                     ""
 			);
 
-            uiUpdatePrism.Attributes.Add("onclick", clientsideUpdateFunction);
+            //uiUpdatePrism.Attributes.Add("onclick", clientsideUpdateFunction);
 
             //SetDebugInfo(context);
         }
@@ -305,46 +305,152 @@ namespace HaloBI.Prism.Plugin
                 returned_data = JObject.Parse(result);
             }
 
-            JToken baseJson = returned_data["query"]["results"]["channel"];
+            
 
-            if (returned_data["query"]["results"].ToString() != "")
+            try
             {
+                JToken baseJson = returned_data["query"]["results"]["channel"];
 
                 String cityName = baseJson["location"]["city"].ToString();
                 String countryName = baseJson["location"]["country"].ToString();
                 String regionName = baseJson["location"]["region"].ToString();
                 String currentCondit = baseJson["item"]["condition"]["text"].ToString();
-                String sunrise = baseJson["astronomy"]["sunrise"].ToString();
-                String sunset = baseJson["astronomy"]["sunset"].ToString();
                 String tempHigh = baseJson["item"]["forecast"][0]["high"].ToString();
                 String tempLow = baseJson["item"]["forecast"][0]["low"].ToString();
                 String tempCurr = baseJson["item"]["condition"]["temp"].ToString();
-                String date = baseJson["item"]["forecast"][0]["date"].ToString();
                 String tempUnits = baseJson["units"]["temperature"].ToString();
+                String tomorHigh = baseJson["item"]["forecast"][0]["high"].ToString();
+                String tomorLow = baseJson["item"]["forecast"][0]["low"].ToString();
 
 
-                uiSelectedMembers.Text = "<br><br>City:<br>" +
-                    cityName + "<br><br>Country:<br>" +
-                    countryName + "<br><br>Region:<br>" +
-                    regionName + "<br><br>Current Conditions:<br>" +
-                    currentCondit + "<br><br>Temperature High:<br>" +
-                    tempHigh + tempUnits + "<br><br>Low:<br>" +
-                    tempLow + tempUnits + "<br><br>Current Temperature:<br>" +
-                    tempCurr + tempUnits + "<br><br>Date:<br>" +
-                    date + "<br><br>Sunrise:<br>" +
-                    sunrise + "<br><br>Sunset:<br>" +
-                    sunset + returned_data["query"];
+                city.Text = cityName + ", " + regionName + ", " + countryName;
+                currWeather.Text = currentCondit;
+                currTemp.Text = tempCurr + "°" + tempUnits;
+                high.Text = "High " + tempHigh + "°" + tempUnits;
+                low.Text = "Low " + tempLow + "°" + tempUnits;
+                nextTemp.Text = tomorHigh + "°" + tempUnits + " | " + tomorLow + "°" + tempUnits;
 
+            
+            
+                String icon = returned_data["query"]["results"]["channel"]["item"]["condition"]["code"].ToString();
+                switch (icon)
+                {
+                    case "0":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/tornado.png";
+                        break;
+                    case "1":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                        break;
+                    case "2":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/torrential-rain.png";
+                        break;
+                    case "3":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                        break;
+                    case "4":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                        break;
+                    case "5":
+                    case "6":
+                    case "7":
+                    case "8":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                        break;
+                    case "9":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
+                        break;
+                    case "10":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                        break;
+                    case "11":
+                    case "12":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
+                        break;
+                    case "13":
+                    case "14":
+                    case "15":
+                    case "16":
+                    case "17":
+                    case "18":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                        break;
+                    case "26":
+                    case "27":
+                    case "28":
+                    case "29":
+                    case "30":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
+                        break;
+                    case "32":
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
+                        break;
+                    default:
+                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
+                        break;
+                }
+
+
+                String nextWeatherIcon = returned_data["query"]["results"]["channel"]["item"]["forecast"][0]["code"].ToString();
+                switch (icon)
+                {
+                    case "0":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/tornado.png";
+                        break;
+                    case "1":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                        break;
+                    case "2":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/torrential-rain.png";
+                        break;
+                    case "3":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                        break;
+                    case "4":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                        break;
+                    case "5":
+                    case "6":
+                    case "7":
+                    case "8":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                        break;
+                    case "9":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
+                        break;
+                    case "10":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                        break;
+                    case "11":
+                    case "12":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
+                        break;
+                    case "13":
+                    case "14":
+                    case "15":
+                    case "16":
+                    case "17":
+                    case "18":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                        break;
+                    case "26":
+                    case "27":
+                    case "28":
+                    case "29":
+                    case "30":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
+                        break;
+                    case "32":
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
+                        break;
+                    default:
+                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
+                        break;
+                }
             }
-            else
+            catch (Exception e)
             {
-                uiSelectedMembers.Text = "Please select a city (not a country) to see the weather for an area.";
+                city.Text = "Please select a city (not a country) to see the weather for an area.";
             }
-
-
-            //Icons!
-            WeatherIcon.ImageUrl  = "https://visualpharm.com/assets/187/Stormy Weather-595b40b65ba036ed117d38cd.svg";
-            //Icon End
 
         }
 

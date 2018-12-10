@@ -1,0 +1,16 @@
+-Highs
+-Lows
+-Current Temp
+-(what measurement F/C)
+graphics
+forecast (stretch goal)
+
+-On inital load - show weather
+-Show weather when selecter from another pane.
+Stop first city loaded being "All, Catalonia"
+
+Notes:
+asp:Label or asp:Button - is just a way of referencing the element in the aspx.cs document
+the counterpart is the elements ID.text or another properties
+
+Take weather icon from source code here: https://visualpharm.com/free-icons/rain-595b40b85ba036ed117da201

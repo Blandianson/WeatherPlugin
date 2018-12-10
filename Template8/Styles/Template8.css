@@ -1,5 +1,10 @@
-﻿body {
-	font-family: Helvetica, Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+﻿/*https://icons8.com/icon/pack/weather/ultraviolet*/
+* {
+    margin: 0;
+}
+body {
+    font-family: Helvetica, Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+    background-color: white;
 }
 
 .ui-plugin-template-context {
@@ -8,6 +13,51 @@
 }
 
 .ui-plugin-template-prismSelection {
-	background-color: #FFE97F;
+	background-color: aquamarine;
 	padding: 4px;
+}
+#parentPanel {
+    display: flex;
+    justify-content: flex-start;
+}
+#currWeather1 {
+    padding-top: 10px;
+}
+#currIcon {
+    padding-top: 30px;
+}
+#temp {
+    width: auto;
+    margin-top: 15%;
+    margin-left: 10px;
+}
+#r_panel {
+    margin-left: 300px;
+    margin-top: 30px;
+}
+#tomorrow {
+    display: flex;
+    justify-content: flex-start;
+    height: 50px;
+}
+hr {
+    width: 100%;
+    margin: 10px;
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+#weatherUI{
+    margin: 10px;
+}
+#nextTemp{
+    line-height:50px;
+    margin-left: 10px;
+}
+#low{
+    margin-bottom: 20px;
+}
+#hideAdmin{
+    display:none;
 }
