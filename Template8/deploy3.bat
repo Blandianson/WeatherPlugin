@@ -1,1 +1,0 @@
-xcopy "C:\Users\Nicole.jackson\Documents\Halo.Development\Halo.Plugins\Template8\bin\Template8.aspx" "C:\inetpub\wwwroot\Halo\Plugins\Template8"

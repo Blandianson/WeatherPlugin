@@ -322,9 +322,17 @@ namespace HaloBI.Prism.Plugin
                 String tomorHigh = baseJson["item"]["forecast"][0]["high"].ToString();
                 String tomorLow = baseJson["item"]["forecast"][0]["low"].ToString();
 
-                String tempUnitPref = Request.Form["tempToggle"];
+                String tempUnitPref;
+                bool check;
+                
+                tempUnitPref = Request.Form["tempToggle"];
+                if (tempToggle.Checked == false)
+                {
+                    check = tempToggle.Checked;
+                    city.Text = cityName + ", " + regionName + ", " + countryName + check;
+                }
 
-                city.Text = cityName + ", " + regionName + ", " + countryName + tempUnitPref;
+                
                 currWeather.Text = currentCondit;
                 currTemp.Text = FarenToCelcius(tempCurr) + "°" + tempUnits;
                 high.Text = "High " + FarenToCelcius(tempHigh) + "°" + tempUnits;

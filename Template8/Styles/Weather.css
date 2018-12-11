@@ -73,6 +73,9 @@ hr {
     line-height: 50px;
     margin-left: 10px;
 }
+
+
+/*Checkbox Toggle*/
 .switch {
     position: relative;
     display: inline-block;
@@ -124,7 +127,6 @@ input:checked + .slider:before {
     transform: translateX(35px);
 }
 
-/*------ ADDED CSS ---------*/
 .slider:after {
     content: 'C';
     color: white;

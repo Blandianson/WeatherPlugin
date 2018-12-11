@@ -22,7 +22,7 @@
                 <div id="temp">
                     <h1><asp:Label runat="server" ID="currTemp">16 C</asp:Label></h1>
                     <label class="switch">
-                      <input type="checkbox" id="tempToggle" value="1" />
+                      <asp:CheckBox id="tempToggle" runat="server" AutoPostBack="True"/>
                       <span class="slider round"></span>
                     </label>
                 </div>
