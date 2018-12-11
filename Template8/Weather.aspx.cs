@@ -291,8 +291,9 @@ namespace HaloBI.Prism.Plugin
             SetContextToSession(context, _contextId);
         }
 
-        protected void HttpRequestData(String location)
+        protected Array HttpRequestData(String location)
         {
+            string[] stringArray;
             JObject returned_data;
             String result;
             String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + location + "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
@@ -321,36 +322,30 @@ namespace HaloBI.Prism.Plugin
                 String tempUnits = baseJson["units"]["temperature"].ToString();
                 String tomorHigh = baseJson["item"]["forecast"][0]["high"].ToString();
                 String tomorLow = baseJson["item"]["forecast"][0]["low"].ToString();
-
-                String tempUnitPref;
-                bool check;
                 
-                tempUnitPref = Request.Form["tempToggle"];
-                if (tempToggle.Checked == false)
-                {
-                    check = tempToggle.Checked;
-                    city.Text = cityName + ", " + regionName + ", " + countryName + check;
-                }
 
-                
+                city.Text = cityName + ", " + regionName + ", " + countryName;
                 currWeather.Text = currentCondit;
-                currTemp.Text = FarenToCelcius(tempCurr) + "°" + tempUnits;
-                high.Text = "High " + FarenToCelcius(tempHigh) + "°" + tempUnits;
-                low.Text = "Low " + FarenToCelcius(tempLow) + "°" + tempUnits;
-                nextHigh.Text = FarenToCelcius(tomorHigh) + "°" + tempUnits; 
-                nextLow.Text = FarenToCelcius(tomorLow) + "°" + tempUnits;
+                currTemp.Text = tempCurr + "°F";
+                high.Text = "High " + tempHigh + "°F";
+                low.Text = "Low " + tempLow + "°F";
+                nextHigh.Text = tomorHigh + "°F"; 
+                nextLow.Text = tomorLow + "°F";
 
 
                 String icon = returned_data["query"]["results"]["channel"]["item"]["condition"]["code"].ToString();
                 insertIcon(currIcon, icon);
                 String nextWeatherIcon = returned_data["query"]["results"]["channel"]["item"]["forecast"][0]["code"].ToString();
                 insertIcon(nextIcon, nextWeatherIcon);
+
+                stringArray = new String[] { tempCurr, tempHigh, tempLow, tomorHigh, tomorLow };
             }
             catch (Exception e)
             {
                 city.Text = "Please select a city (not a country) to see the weather for an area.";
+                stringArray = new String[] { };
             }
-
+            return stringArray;
         }
 
         protected String FarenToCelcius(String fString)
@@ -419,12 +414,33 @@ namespace HaloBI.Prism.Plugin
             }
         }
 
+        protected void changeUnit(string[] tempData)
+        {
+           
+            if (tempToggle.Checked == false)
+            {
+                currTemp.Text = tempData[0] + "°F";
+                high.Text = "High " + tempData[1] + "°F";
+                low.Text = "Low " + tempData[2] + "°F";
+                nextHigh.Text = tempData[3] + "°F";
+                nextLow.Text = tempData[4] + "°F";
+            }
+            else
+            {
+                currTemp.Text = FarenToCelcius(tempData[0]) + "°C";
+                high.Text = "High " + FarenToCelcius(tempData[1]) + "°C";
+                low.Text = "Low " + FarenToCelcius(tempData[2]) + "°C";
+                nextHigh.Text = FarenToCelcius(tempData[3]) + "°C";
+                nextLow.Text = FarenToCelcius(tempData[4]) + "°C";
+            }
+        }
+
         protected void uiUpdatePrism_Click(object sender, EventArgs e)
         {
 
             String location = uiMembersList.SelectedItem.Text;
-            HttpRequestData(location);
-
+            string[] tempdata = (string[]) HttpRequestData(location);
+            changeUnit(tempdata);
         }
     }
 }

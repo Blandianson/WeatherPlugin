@@ -128,7 +128,7 @@ input:checked + .slider:before {
 }
 
 .slider:after {
-    content: 'C';
+    content: 'F';
     color: white;
     display: block;
     position: absolute;
@@ -140,5 +140,5 @@ input:checked + .slider:before {
 }
 
 input:checked + .slider:after {
-    content: 'F';
+    content: 'C';
 }
