@@ -1,13 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Template8.aspx.cs" Inherits="HaloBI.Prism.Plugin.Template8" validateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Weather.aspx.cs" Inherits="HaloBI.Prism.Plugin.Weather" validateRequest="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
-        <%--Keep the following --%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-	<link href="Styles/Template8.css" rel="stylesheet" />
+	<link href="Styles/Weather.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -23,6 +21,10 @@
 
                 <div id="temp">
                     <h1><asp:Label runat="server" ID="currTemp">16 C</asp:Label></h1>
+                    <label class="switch">
+                      <input type="checkbox" id="tempToggle" value="1" />
+                      <span class="slider round"></span>
+                    </label>
                 </div>
 
                 <div id="r_panel">
@@ -33,7 +35,9 @@
                     <h4><asp:Label runat="server" ID="titleTomor">Tomorrow</asp:Label></h4>
                     <div id="tomorrow">
                         <asp:Image runat="server" ID="nextIcon" alt="Tommorows Weather" width="50px" height="50px"/>
-                        <h5><asp:Label runat="server" ID="nextTemp">Tomorrows Temperature</asp:Label></h5>
+                        <h5><asp:Label runat="server" ID="nextHigh">Tomorrows High</asp:Label></h5>
+                        <h5><asp:Label runat="server" ID="delimitier"> | </asp:Label></h5>
+                        <h5><asp:Label runat="server" ID="nextLow">Tomorrows Low</asp:Label></h5>
                     </div>
                 </div>
 

@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace HaloBI.Prism.Plugin
 {
-    public partial class Template8 : System.Web.UI.Page
+    public partial class Weather : System.Web.UI.Page
     {
         string _contextId = "";
 
@@ -46,7 +46,7 @@ namespace HaloBI.Prism.Plugin
             var context = GetContext(sessionId);
 
             // set plugin properties and store in session
-            context["plugin"]["name"] = "Template";
+            context["plugin"]["name"] = "Weather";
             context["plugin"]["physicalPath"] = Path.GetDirectoryName(
                 HttpContext.Current.Request.PhysicalPath);
             context["plugin"]["embedMode"] = "iFrame";
@@ -322,130 +322,21 @@ namespace HaloBI.Prism.Plugin
                 String tomorHigh = baseJson["item"]["forecast"][0]["high"].ToString();
                 String tomorLow = baseJson["item"]["forecast"][0]["low"].ToString();
 
+                String tempUnitPref = Request.Form["tempToggle"];
 
-                city.Text = cityName + ", " + regionName + ", " + countryName;
+                city.Text = cityName + ", " + regionName + ", " + countryName + tempUnitPref;
                 currWeather.Text = currentCondit;
-                currTemp.Text = tempCurr + "°" + tempUnits;
-                high.Text = "High " + tempHigh + "°" + tempUnits;
-                low.Text = "Low " + tempLow + "°" + tempUnits;
-                nextTemp.Text = tomorHigh + "°" + tempUnits + " | " + tomorLow + "°" + tempUnits;
+                currTemp.Text = FarenToCelcius(tempCurr) + "°" + tempUnits;
+                high.Text = "High " + FarenToCelcius(tempHigh) + "°" + tempUnits;
+                low.Text = "Low " + FarenToCelcius(tempLow) + "°" + tempUnits;
+                nextHigh.Text = FarenToCelcius(tomorHigh) + "°" + tempUnits; 
+                nextLow.Text = FarenToCelcius(tomorLow) + "°" + tempUnits;
 
-            
-            
+
                 String icon = returned_data["query"]["results"]["channel"]["item"]["condition"]["code"].ToString();
-                switch (icon)
-                {
-                    case "0":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/tornado.png";
-                        break;
-                    case "1":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
-                        break;
-                    case "2":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/torrential-rain.png";
-                        break;
-                    case "3":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
-                        break;
-                    case "4":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
-                        break;
-                    case "5":
-                    case "6":
-                    case "7":
-                    case "8":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
-                        break;
-                    case "9":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
-                        break;
-                    case "10":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
-                        break;
-                    case "11":
-                    case "12":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
-                        break;
-                    case "13":
-                    case "14":
-                    case "15":
-                    case "16":
-                    case "17":
-                    case "18":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
-                        break;
-                    case "26":
-                    case "27":
-                    case "28":
-                    case "29":
-                    case "30":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
-                        break;
-                    case "32":
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
-                        break;
-                    default:
-                        currIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
-                        break;
-                }
-
-
+                insertIcon(currIcon, icon);
                 String nextWeatherIcon = returned_data["query"]["results"]["channel"]["item"]["forecast"][0]["code"].ToString();
-                switch (icon)
-                {
-                    case "0":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/tornado.png";
-                        break;
-                    case "1":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
-                        break;
-                    case "2":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/torrential-rain.png";
-                        break;
-                    case "3":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
-                        break;
-                    case "4":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
-                        break;
-                    case "5":
-                    case "6":
-                    case "7":
-                    case "8":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
-                        break;
-                    case "9":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
-                        break;
-                    case "10":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
-                        break;
-                    case "11":
-                    case "12":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
-                        break;
-                    case "13":
-                    case "14":
-                    case "15":
-                    case "16":
-                    case "17":
-                    case "18":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
-                        break;
-                    case "26":
-                    case "27":
-                    case "28":
-                    case "29":
-                    case "30":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
-                        break;
-                    case "32":
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
-                        break;
-                    default:
-                        nextIcon.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
-                        break;
-                }
+                insertIcon(nextIcon, nextWeatherIcon);
             }
             catch (Exception e)
             {
@@ -454,6 +345,71 @@ namespace HaloBI.Prism.Plugin
 
         }
 
+        protected String FarenToCelcius(String fString)
+        {
+            double f = Double.Parse(fString);
+            double c = ((f - 32) * 5) / 9;
+            return Math.Round(c).ToString();
+        }
+
+        protected void insertIcon(Image imgName, String weatherCode)
+        {
+            switch (weatherCode)
+            {
+                case "0":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/tornado.png";
+                    break;
+                case "1":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                    break;
+                case "2":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/torrential-rain.png";
+                    break;
+                case "3":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                    break;
+                case "4":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud-lighting.png";
+                    break;
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                    break;
+                case "9":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
+                    break;
+                case "10":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                    break;
+                case "11":
+                case "12":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/rain.png";
+                    break;
+                case "13":
+                case "14":
+                case "15":
+                case "16":
+                case "17":
+                case "18":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/snow.png";
+                    break;
+                case "26":
+                case "27":
+                case "28":
+                case "29":
+                case "30":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
+                    break;
+                case "32":
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/sun.png";
+                    break;
+                default:
+                    imgName.ImageUrl = "https://img.icons8.com/ultraviolet/480/000000/cloud.png";
+                    break;
+            }
+        }
 
         protected void uiUpdatePrism_Click(object sender, EventArgs e)
         {

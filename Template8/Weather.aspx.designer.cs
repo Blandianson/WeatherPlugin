@@ -10,7 +10,7 @@
 namespace HaloBI.Prism.Plugin {
     
     
-    public partial class Template8 {
+    public partial class Weather {
         
         /// <summary>
         /// form1 control.
@@ -94,13 +94,31 @@ namespace HaloBI.Prism.Plugin {
         protected global::System.Web.UI.WebControls.Image nextIcon;
         
         /// <summary>
-        /// nextTemp control.
+        /// nextHigh control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label nextTemp;
+        protected global::System.Web.UI.WebControls.Label nextHigh;
+        
+        /// <summary>
+        /// delimitier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label delimitier;
+        
+        /// <summary>
+        /// nextLow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label nextLow;
         
         /// <summary>
         /// uiMembersList control.
